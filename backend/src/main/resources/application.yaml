@@ -1,0 +1,13 @@
+spring:
+
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/test
+
+  security:
+    jwt:
+      uri: /auth/**
+      header: Authorization
+      prefix: Bearer
+      expiration: 86400
+      secret: JwtSecretKey
