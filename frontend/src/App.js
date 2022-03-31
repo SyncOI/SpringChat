@@ -1,23 +1,22 @@
+import React, {useState} from "react";
 import './App.css';
+import Header from "./common/Header";
+import Footer from "./common/Footer";
+import Chat from "./chat/Chat";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+function App(props) {
+
+    const [authorized, setAuthorized] = useState(false)
+
+    return (
+        <>
+            <Header autorized={authorized} setAthorized={setAuthorized} />
+            <Chat />
+            <Footer />
+        </>
+    )
+
 }
 
 export default App;
