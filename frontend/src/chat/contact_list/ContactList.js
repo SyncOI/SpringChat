@@ -2,6 +2,7 @@ import {Search} from "./Search";
 import {Contact} from "./Contact";
 import {useEffect, useState} from "react";
 import {ButtonCreateNewRoom} from "./ButtonCreateNewRoom";
+import React from "react";
 
 function ContactList(props) {
 
@@ -34,8 +35,8 @@ function ContactList(props) {
                                  uri={uri}/>
 
             {items.map(item => (
-                <Contact key={item.recipient.id}
-                         id={item.recipient.id}
+                <Contact key={item.chatId}
+                         id={item.chatId}
                          currentDialog={currentDialog}
                          setCurrentDialog={setCurrentDialog}
                          srcAvatar={"https://bootdey.com/img/Content/avatar/avatar" + item.recipient.avatarId + ".png"}

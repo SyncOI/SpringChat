@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {Button, Form, Modal, Nav} from "react-bootstrap";
 
 export function Registration(props) {

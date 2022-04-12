@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 
 @Data
 @AllArgsConstructor
@@ -22,6 +23,7 @@ public class User implements UserDetails {
     private String id;
     private String username;
     private String password;
+    private String avatarId = String.valueOf(new Random().nextInt(8) + 1);
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

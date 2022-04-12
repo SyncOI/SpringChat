@@ -1,3 +1,5 @@
+import React from "react";
+
 export function Search() {
 
     return <div className="px-4 d-none d-md-block">

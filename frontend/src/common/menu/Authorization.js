@@ -1,4 +1,5 @@
 import {useState} from "react";
+import React from "react";
 import {Button, Form, Modal, Nav} from "react-bootstrap";
 
 export function Authorization(props) {

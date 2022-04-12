@@ -71,4 +71,8 @@ public class MessageService {
         Update update = Update.update("status", status);
         mongoOperations.updateMulti(query, update, Message.class);
     }
+
+    public List<Message> findByChatId(String chatId) {
+        return repository.findByChatId(chatId);
+    }
 }

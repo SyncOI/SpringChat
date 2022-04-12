@@ -52,4 +52,8 @@ public class RoomService {
                     return Optional.of(chatId);
                 });
     }
+
+    public Optional<Room> findBySenderIdAndChatId(String senderId, String chatId) {
+        return repository.findBySenderIdAndChatId(senderId, chatId);
+    }
 }

@@ -1,3 +1,5 @@
+import React from "react";
+
 export function Message(props) {
     const avatarWidth = 40;
     const avatarHeight = 40;

@@ -1,4 +1,5 @@
 import {Nav} from "react-bootstrap";
+import React from "react";
 
 export function Exit(props) {
 

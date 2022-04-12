@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import ru.syncoi.springchat.dto.UserInfo;
+import ru.syncoi.springchat.model.Room;
 import ru.syncoi.springchat.model.User;
 import ru.syncoi.springchat.service.MessageService;
 import ru.syncoi.springchat.service.RoomService;
@@ -12,6 +13,7 @@ import ru.syncoi.springchat.service.UserService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -64,5 +66,20 @@ public class RoomController {
         Map<String, String> rsl = new HashMap<>();
         rsl.put("id", id);
         return ResponseEntity.ok().body(rsl);
+    }
+
+    @GetMapping("/{idRoom}")
+    public ResponseEntity<?> infoAboutRoom(@PathVariable(value = "idRoom") String idRoom) {
+        String currentName = SecurityContextHolder.getContext().getAuthentication().getName();
+        Room room = roomService.findBySenderIdAndChatId(currentName, idRoom).orElse(new Room());
+
+        Map<String, Object> rsl = new HashMap<>();
+        rsl.put("chatId", room.getChatId());
+        rsl.put("recipientId", room.getRecipientId());
+        rsl.put("senderId", room.getSenderId());
+        rsl.put("recipient", new UserInfo(userService.findByUsername(room.getRecipientId()).orElse(new User())));
+        rsl.put("sender", new UserInfo(userService.findByUsername(room.getSenderId()).orElse(new User())));
+
+        return ResponseEntity.ok(rsl);
     }
 }

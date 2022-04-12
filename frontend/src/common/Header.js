@@ -4,6 +4,7 @@ import {Exit} from "./menu/Exit";
 import {Authorization} from "./menu/Authorization";
 import {Registration} from "./menu/Registration";
 import {Profile} from "./menu/Profile";
+import React from "react";
 
 function Header(props) {
 
