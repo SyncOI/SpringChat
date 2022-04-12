@@ -12,6 +12,7 @@ function Dialog(props) {
 
     const [stompClient, setStompClient] = useState(null);
 
+    const uriWS = props.uriWS
     const uri = props.uri
     const roomInfo = props.roomInfo
     const currentDialog = props.currentDialog
@@ -64,7 +65,7 @@ function Dialog(props) {
             setMessages(oldArray => [...oldArray, JSON.parse(info.body)])
         }
 
-        let socket = new SockJS('http://localhost:8080/ws');
+        let socket = new SockJS(uriWS);
         const _stompClient = Stomp.over(socket)
         _stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);

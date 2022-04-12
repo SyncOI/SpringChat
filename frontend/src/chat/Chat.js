@@ -8,6 +8,7 @@ function Chat(props) {
 
     const authorized = props.authorized
     const uri = props.uri
+    const uriWS = props.uriWS
     const [currentDialog, setCurrentDialog] = useState("")
     const [roomInfo, setRoomInfo] = useState({})
 
@@ -40,7 +41,8 @@ function Chat(props) {
                         <ContactList uri={uri}
                                      currentDialog={currentDialog}
                                      setCurrentDialog={setCurrentDialog}/>
-                        <Dialog uri={uri}
+                        <Dialog uriWS={uriWS}
+                                uri={uri}
                                 roomInfo={roomInfo}
                                 currentDialog={currentDialog}/>
                     </div>

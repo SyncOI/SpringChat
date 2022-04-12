@@ -5,6 +5,7 @@ import Footer from "./common/Footer";
 import Chat from "./chat/Chat";
 
 const uri = "http://localhost:8080/api"
+const uriWS = "http://localhost:80/api"
 
 function App() {
 
@@ -42,7 +43,8 @@ function App() {
                     name={name}
                     uri={uri}/>
             <Chat authorized={authorized}
-                  uri={uri}/>
+                  uri={uri}
+                  uriWS={uriWS}/>
             <Footer/>
         </>
     )
