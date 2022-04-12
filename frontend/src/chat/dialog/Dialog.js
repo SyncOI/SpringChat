@@ -17,20 +17,24 @@ function Dialog(props) {
     const currentDialog = props.currentDialog
     const [messages, setMessages] = useState([])
 
+    const [messageText, setMessageText] = useState("")
+
     const recipientAvatar = (Object.keys(roomInfo).length !== 0 ? "https://bootdey.com/img/Content/avatar/avatar" + roomInfo.recipient.avatarId + ".png" : "");
     const senderAvatar = (Object.keys(roomInfo).length !== 0 ? "https://bootdey.com/img/Content/avatar/avatar" + roomInfo.sender.avatarId + ".png" : "")
 
     const sendMessage = (e) => {
         e.preventDefault()
         let message = {
-            senderId: 1,
-            recipientId: 2,
-            senderName: "K",
-            recipientName: "J",
-            content: "Hello",
+            chatId: roomInfo.chatId,
+            senderId: roomInfo.sender.username,
+            senderName: roomInfo.sender.username,
+            recipientId: roomInfo.recipient.username,
+            recipientName: roomInfo.recipient.username,
+            content: messageText,
             timestamp: new Date(),
         };
         stompClient.send("/app/chat", {}, JSON.stringify(message));
+        setMessageText("")
     }
 
     useEffect(() => {
@@ -57,7 +61,7 @@ function Dialog(props) {
         }
 
         const getMessage = (info) => {
-          console.log(JSON.parse(info))
+            setMessages(oldArray => [...oldArray, JSON.parse(info.body)])
         }
 
         let socket = new SockJS('http://localhost:8080/ws');
@@ -94,65 +98,12 @@ function Dialog(props) {
                                  message={value.content} />
                     ))}
 
-                    {/*<Message direction="out" sender="You" time="14:33"
-                             srcAvatar={senderAvatar}
-                             message="Lorem ipsum dolor sit amet, vis erat deniq"/>
-
-                    <Message direction="in" sender="Sharon Lessman" time="14:33"
-                             srcAvatar={recipientAvatar}
-                             message="Sit meis deleniti eue docendi ut, an eum erat animal commodo."/>
-
-                    <Message direction="out" sender="You" time="14:33"
-                             srcAvatar={senderAvatar}
-                             message="Lsum dolor sit amet, vis erat denique in, dicunt prodesset te vix."/>
-
-                    <Message direction="in" sender="Sharon Lessman" time="14:33"
-                             srcAvatar={recipientAvatar}
-                             message="Sit meis deleniti eu, pri vidit meliore docendi ut, an eum erat animal commodo."/>
-
-
-                    <Message direction="out" sender="You" time="14:33"
-                             srcAvatar={senderAvatar}
-                             message="L, vis erat denique in, dicunt prodesset te vix."/>
-
-                    <Message direction="in" sender="Sharon Lessman" time="14:33"
-                             srcAvatar={recipientAvatar}
-                             message=" meis deleniti eu, pri vidit meliore docendi ut, an eum erat animal commodo."/>
-
-
-                    <Message direction="out" sender="You" time="14:33"
-                             srcAvatar={senderAvatar}
-                             message="Lorem ipsum dolor sit amet, vis eraesset te vix."/>
-
-                    <Message direction="in" sender="Sharon Lessman" time="14:33"
-                             srcAvatar={recipientAvatar}
-                             message="Sit meis deleniti eu, pri vidit meliore docendi ut, an eum erat is deleniti eu, pri vidit meliore docendi ut, an eum erat ananimal commodo."/>
-
-                    <Message direction="out" sender="You" time="14:33"
-                             srcAvatar={senderAvatar}
-                             message="Lorem ipsu dicunt prodesset te vix."/>
-
-                    <Message direction="in" sender="Sharon Lessman" time="14:33"
-                             srcAvatar={recipientAvatar}
-                             message="Sit meis deleniti eu, pri vidit meliore docendi ut, an eum erat animal commodo."/>
-
-                    <Message direction="out" sender="You" time="14:33"
-                             srcAvatar={senderAvatar}
-                             message="Lorem ipsum dolor sit amet, vis erat denique in, dicunt prodesset te vix."/>
-
-                    <Message direction="in" sender="Sharon Lessman" time="14:33"
-                             srcAvatar={recipientAvatar}
-                             message="Sit meis deleniti eu, pri vidit meliore docendi ut, an eum erat animal commodo."/>
-
-                    <Message direction="out" sender="You" time="14:33"
-                             srcAvatar={senderAvatar}
-                             message="Lorem ipsum dolor sit amet, vis erat denique in, dicunt prodesset te vix."/>*/}
-
-
                 </div>
             </div>
 
-            <InputSender sendMessage={sendMessage}/>
+            <InputSender messageText={messageText}
+                         setMessageText={setMessageText}
+                         sendMessage={sendMessage}/>
 
         </div>
     )
