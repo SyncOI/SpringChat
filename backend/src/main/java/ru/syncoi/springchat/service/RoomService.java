@@ -45,7 +45,9 @@ public class RoomService {
                             .build();
 
                     repository.save(senderRecipient);
-                    repository.save(recipientSender);
+                    if (!senderId.equals(recipientId)) {
+                        repository.save(recipientSender);
+                    }
 
                     return Optional.of(chatId);
                 });

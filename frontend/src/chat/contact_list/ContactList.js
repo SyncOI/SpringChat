@@ -1,38 +1,48 @@
 import {Search} from "./Search";
 import {Contact} from "./Contact";
+import {useEffect, useState} from "react";
+import {ButtonCreateNewRoom} from "./ButtonCreateNewRoom";
 
 function ContactList(props) {
 
+    const currentDialog = props.currentDialog
+    const setCurrentDialog = props.setCurrentDialog
     const uri = props.uri
+    const [items, setItems] = useState([])
 
-    fetch(uri + "/room/my", {
-        method: 'GET',
-        headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem("token")
-        }
-    }).then((response) => {
-        return response.json()
-    }).then((data) => {
-        console.log(data)
-    })
+    const contactUpdate = () => {
+        fetch(uri + "/room/my", {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem("token")
+            }
+        }).then((response) => {
+            return response.json()
+        }).then((data) => {
+            setItems(data)
+        })
+    }
+
+    useEffect(() => contactUpdate(), [])
 
     return (
         <div className="col-12 col-lg-5 col-xl-3 border-end">
 
-            <Search />
+            <Search/>
+            <ButtonCreateNewRoom contactUpdate={contactUpdate}
+                                 setCurrentDialog={setCurrentDialog}
+                                 uri={uri}/>
 
-            <Contact name="Vanessa Tucker" status="Online"
-                     srcAvatar="https://bootdey.com/img/Content/avatar/avatar5.png"
-                     notificationCount="5"/>
-            <Contact name="illiam Harris" status="Online"
-                     srcAvatar="https://bootdey.com/img/Content/avatar/avatar1.png"
-                     notificationCount="0"/>
-            <Contact name="Kek Kekov" status="Online"
-                     srcAvatar="https://bootdey.com/img/Content/avatar/avatar2.png"
-                     notificationCount="1"/>
-            <Contact name="Vanessa Tucker" status="Online"
-                     srcAvatar="https://bootdey.com/img/Content/avatar/avatar3.png"
-                     notificationCount="2"/>
+            {items.map(item => (
+                <Contact key={item.recipient.id}
+                         id={item.recipient.id}
+                         currentDialog={currentDialog}
+                         setCurrentDialog={setCurrentDialog}
+                         srcAvatar={"https://bootdey.com/img/Content/avatar/avatar" + item.recipient.avatarId + ".png"}
+                         name={item.recipient.username} status="Online"
+                         notificationCount={item.count_message}
+                />
+            ))}
 
             <hr className="d-block d-lg-none mt-1 mb-0"/>
         </div>

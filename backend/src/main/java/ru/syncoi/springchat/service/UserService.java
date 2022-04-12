@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import ru.syncoi.springchat.model.User;
 import ru.syncoi.springchat.repository.UserRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -46,5 +47,9 @@ public class UserService implements UserDetailsService {
         repository.save(user);
 
         return true;
+    }
+
+    public List<User> findAll() {
+        return repository.findAll();
     }
 }
