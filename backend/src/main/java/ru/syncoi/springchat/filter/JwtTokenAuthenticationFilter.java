@@ -6,6 +6,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import ru.syncoi.springchat.config.JwtConfig;
 import ru.syncoi.springchat.service.JwtTokenProvider;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Component
 public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 
     private JwtTokenProvider tokenProvider;
@@ -31,6 +33,10 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
+//        List<String> a = new ArrayList<>();
+//        request.getHeaderNames().asIterator().forEachRemaining(a::add);
+//
+//        List<String> result = a;
         String header = request.getHeader(jwtConfig.getHeader());
 
         if (header == null || !header.startsWith(jwtConfig.getPrefix())) {

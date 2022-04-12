@@ -1,7 +1,21 @@
 import {Search} from "./Search";
 import {Contact} from "./Contact";
 
-function ContactList() {
+function ContactList(props) {
+
+    const uri = props.uri
+
+    fetch(uri + "/room/my", {
+        method: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem("token")
+        }
+    }).then((response) => {
+        return response.json()
+    }).then((data) => {
+        console.log(data)
+    })
+
     return (
         <div className="col-12 col-lg-5 col-xl-3 border-end">
 

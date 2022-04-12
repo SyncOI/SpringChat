@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.syncoi.springchat.model.Room;
 import ru.syncoi.springchat.repository.RoomRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -13,6 +14,10 @@ public class RoomService {
 
     public RoomService(RoomRepository repository) {
         this.repository = repository;
+    }
+
+    public List<Room> getRoomsByUser(String senderId) {
+        return repository.getAllBySenderId(senderId);
     }
 
     public Optional<String> getChatId(String senderId, String recipientId, boolean createIfNotExist) {

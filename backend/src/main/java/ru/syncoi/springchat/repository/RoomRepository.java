@@ -10,4 +10,5 @@ import java.util.Optional;
 @Repository
 public interface RoomRepository extends MongoRepository<Room, String> {
     Optional<Room> findBySenderIdAndRecipientId(String senderId, String recipientId);
+    List<Room> getAllBySenderId(String senderId);
 }

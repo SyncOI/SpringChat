@@ -23,7 +23,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> user = repository.findById(username);
+        Optional<User> user = repository.findByUsername(username);
 
         if (user.isEmpty()) {
             throw new UsernameNotFoundException("Username " + username + " wasn't found");
@@ -32,4 +32,19 @@ public class UserService implements UserDetailsService {
         return user.get();
     }
 
+    public Optional<User> findByUsername(String username) {
+        return repository.findByUsername(username);
+    }
+
+    public boolean create(User user) {
+
+        if (repository.findByUsername(user.getUsername()).isPresent()) {
+            return false;
+        }
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        repository.save(user);
+
+        return true;
+    }
 }

@@ -5,6 +5,7 @@ import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import ru.syncoi.springchat.config.JwtConfig;
 
@@ -46,14 +47,15 @@ public class JwtTokenProvider {
     }
 
     public String generateToken(Authentication authentication) {
-        Long now = System.currentTimeMillis();
+
+        long now = System.currentTimeMillis();
         return Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim("authorities", authentication.getAuthorities().stream()
                         .map(GrantedAuthority::getAuthority)
                         .collect(Collectors.toList()))
                 .setIssuedAt(new Date(now))
-                .setExpiration(new Date(now + jwtConfig.getExpiration() * 1000))
+                .setExpiration(new Date(now + jwtConfig.getExpiration() * 1000L))
                 .signWith(SignatureAlgorithm.HS256, jwtConfig.getSecret().getBytes())
                 .compact();
 
