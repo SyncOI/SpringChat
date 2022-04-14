@@ -5,7 +5,7 @@ import Footer from "./common/Footer";
 import Chat from "./chat/Chat";
 
 const uri = "http://localhost:8080/api"
-const uriWS = "http://localhost:80/api"
+const uriWS = "http://localhost:8080/ws"
 
 function App() {
 
